@@ -39,8 +39,15 @@ func getCountLineOfCode(owner string, repo string) int {
 	return num
 }
 func handler(w http.ResponseWriter, r *http.Request) {
-
-	fmt.Fprintf(w, "Hello, World")
+	str := `<html><head><title>Count Line of Code on GitHub Repository</title><head>
+<body><form id="inputform" method="POST">
+<input type="text" name="ownerandrepository" autofocus />
+<input type="submit" value="Count" />
+</form>
+ex. jquery/jquery
+</body>
+</html>`
+	fmt.Fprintf(w, str)
 }
 
 func main() {
