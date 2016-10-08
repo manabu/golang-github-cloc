@@ -45,6 +45,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//ownerandrepository := r.URL.Query().Get("ownerandrepository")
 	// POST
 	ownerandrepository := r.Form.Get("ownerandrepository")
+	ownerandrepository = strings.Replace(ownerandrepository, " ", "", -1)
+	ownerandrepository = strings.Replace(ownerandrepository, "'", "", -1)
+	ownerandrepository = strings.Replace(ownerandrepository, "\"", "", -1)
+	ownerandrepository = strings.Replace(ownerandrepository, "\\", "", -1)
 	var cloc = ""
 	if len(ownerandrepository) != 0 {
 		var fields = strings.Split(ownerandrepository, "/")
@@ -53,11 +57,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		num := getCountLineOfCode(owner, repository)
 		// escape ownerandrepository and num
 		var escapedownerandrepository = html.EscapeString(ownerandrepository)
+		var linestring = "Repository not found or error happens"
+		var apiurlstring = "<br>"
 		if num != -1 {
-			cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + html.EscapeString(strconv.Itoa(num)) + "<br>"
-		} else {
-			cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + "Repository not found or error happens" + "<br>"
+			linestring = html.EscapeString(strconv.Itoa(num))
+			var url = "https://api.github.com/repos/" + escapedownerandrepository + "/stats/code_frequency"
+			apiurlstring = "<a href='" + url + "'>" + url + "</a><br>"
 		}
+		cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + linestring + "<br>" + apiurlstring
 	}
 	str := `<!DOCTYPE html><html><head><title>Count Line of Code on GitHub Repository</title></head>
 <body><form id="inputform" method="POST">
@@ -65,7 +72,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 <input type="submit" value="Count" />
 </form>
 ex. jquery/jquery<br>
-Request: <a href="https://api.github.com/repos/jquery/jquery/stats/code_frequency">https://api.github.com/repos/jquery/jquery/stats/code_frequency</a><br>
 `
 	str = str + cloc +
 		`
