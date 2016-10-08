@@ -59,7 +59,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + "Repository not found or error happens" + "<br>"
 		}
 	}
-	str := `<html><head><title>Count Line of Code on GitHub Repository</title></head>
+	str := `<!DOCTYPE html><html><head><title>Count Line of Code on GitHub Repository</title></head>
 <body><form id="inputform" method="POST">
 <input type="text" name="ownerandrepository" autofocus />
 <input type="submit" value="Count" />
