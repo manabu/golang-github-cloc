@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html"
 	"log"
 	"net/http"
 	"strconv"
@@ -50,11 +51,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		var owner = fields[0]
 		var repository = fields[1]
 		num := getCountLineOfCode(owner, repository)
-		// TODO escape ownerandrepository and num
+		// escape ownerandrepository and num
+		var escapedownerandrepository = html.EscapeString(ownerandrepository)
 		if num != -1 {
-			cloc = "<h1>Result</h1>" + ownerandrepository + "<br>" + strconv.Itoa(num) + "<br>"
+			cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + html.EscapeString(strconv.Itoa(num)) + "<br>"
 		} else {
-			cloc = "<h1>Result</h1>" + ownerandrepository + "<br>" + "Repository not found or error happens" + "<br>"
+			cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + "Repository not found or error happens" + "<br>"
 		}
 	}
 	str := `<html><head><title>Count Line of Code on GitHub Repository</title></head>
