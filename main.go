@@ -35,7 +35,7 @@ func getCountLineOfCode(owner string, repo string) int {
 	num = -1
 	for _, item := range codes {
 		num = num + *item.Additions
-		num = num - *item.Deletions
+		num = num + *item.Deletions
 	}
 	return num
 }
