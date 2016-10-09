@@ -59,11 +59,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		var escapedownerandrepository = html.EscapeString(ownerandrepository)
 		var linestring = "Repository not found or error happens"
 		var apiurlstring = "<br>"
+
 		if num != -1 {
 			linestring = html.EscapeString(strconv.Itoa(num))
 			var url = "https://api.github.com/repos/" + escapedownerandrepository + "/stats/code_frequency"
-			apiurlstring = "<a href='" + url + "'>" + url + "</a><br>"
+			apiurlstring = "API: <a href='" + url + "'>" + url + "</a><br>"
 		}
+		var repositoryurl = "https://github.com/" + escapedownerandrepository
+		apiurlstring = apiurlstring + "Repository: <a href='" + repositoryurl + "'>" + repositoryurl + "</a><br>"
 		cloc = "<h1>Result</h1>" + escapedownerandrepository + "<br>" + linestring + "<br>" + apiurlstring
 	}
 	str := `<!DOCTYPE html><html><head><title>Count Line of Code on GitHub Repository</title></head>
