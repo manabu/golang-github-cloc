@@ -1,6 +1,5 @@
 # golang-github-cloc
 Count line of code
-
 # Docker
 
 * [library/golang - Docker Hub](https://hub.docker.com/_/golang/)
